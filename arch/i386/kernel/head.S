@@ -484,6 +484,7 @@ ENTRY(boot_gdt_table)
 /*
  * The Global Descriptor Table contains 28 quadwords, per-CPU.
  */
+/* 插入未使用的项的目的是为了使经常一起访问的描述符能够处于同一个32字节的硬件高速缓存行中 */
 	.align PAGE_SIZE_asm
 ENTRY(cpu_gdt_table)
 	.quad 0x0000000000000000	/* NULL descriptor */
@@ -504,7 +505,7 @@ ENTRY(cpu_gdt_table)
 	.quad 0x00cffa000000ffff	/* 0x73 user 4GB code at 0x00000000 */
 	.quad 0x00cff2000000ffff	/* 0x7b user 4GB data at 0x00000000 */
 
-	.quad 0x0000000000000000	/* 0x80 TSS descriptor */
+	.quad 0x0000000000000000	/* 0x80 TSS descriptor *//* 任务状态段(TSS)，每个处理器有一个 */
 	.quad 0x0000000000000000	/* 0x88 LDT descriptor */
 
 	/* Segments used for calling PnP BIOS */
