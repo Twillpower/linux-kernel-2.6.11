@@ -1,0 +1,1 @@
+arch和include目录下包含了linux所支持的不同的硬件平台

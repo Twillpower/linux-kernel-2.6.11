@@ -445,7 +445,7 @@ int_msg:
 
 .globl boot_gdt_descr
 .globl idt_descr
-.globl cpu_gdt_descr
+.globl cpu_gdt_descr /* 所有GDT的地址和他们的大小被存放在该数组中 */
 
 	ALIGN
 # early boot GDT descriptor (must use 1:1 address mapping)
