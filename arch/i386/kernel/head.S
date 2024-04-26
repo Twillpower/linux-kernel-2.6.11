@@ -485,6 +485,8 @@ ENTRY(boot_gdt_table)
  * The Global Descriptor Table contains 28 quadwords, per-CPU.
  */
 /* 插入未使用的项的目的是为了使经常一起访问的描述符能够处于同一个32字节的硬件高速缓存行中 */
+/* GDT: 全局描述符表。GDT在主存中的地址和大小存放在gdtr控制寄存器中
+LDT：局部描述符表。当前正被使用的LDT地址和大小放在控制寄存器中 */
 	.align PAGE_SIZE_asm
 ENTRY(cpu_gdt_table)
 	.quad 0x0000000000000000	/* NULL descriptor */
@@ -493,7 +495,7 @@ ENTRY(cpu_gdt_table)
 	.quad 0x0000000000000000	/* 0x1b reserved */
 	.quad 0x0000000000000000	/* 0x20 unused */
 	.quad 0x0000000000000000	/* 0x28 unused */
-	.quad 0x0000000000000000	/* 0x33 TLS entry 1 */
+	.quad 0x0000000000000000	/* 0x33 TLS entry 1 */ /* 3个局部线程存储(TLS)段，这种机制允许多线程应用程序使用最多3个局部与线程的数据段 */
 	.quad 0x0000000000000000	/* 0x3b TLS entry 2 */
 	.quad 0x0000000000000000	/* 0x43 TLS entry 3 */
 	.quad 0x0000000000000000	/* 0x4b reserved */
@@ -509,6 +511,7 @@ ENTRY(cpu_gdt_table)
 	.quad 0x0000000000000000	/* 0x88 LDT descriptor */
 
 	/* Segments used for calling PnP BIOS */
+	/* 支持即插即用(PnP)功能的BIOS服务程序相关的5个段 */
 	.quad 0x00c09a0000000000	/* 0x90 32-bit code */
 	.quad 0x00809a0000000000	/* 0x98 16-bit code */
 	.quad 0x0080920000000000	/* 0xa0 16-bit data */
@@ -518,6 +521,7 @@ ENTRY(cpu_gdt_table)
 	 * The APM segments have byte granularity and their bases
 	 * and limits are set at run time.
 	 */
+	/* 高级电源管理(AMP)相关的3个段 */
 	.quad 0x00409a0000000000	/* 0xb8 APM CS    code */
 	.quad 0x00009a0000000000	/* 0xc0 APM CS 16 code (16 bit) */
 	.quad 0x0040920000000000	/* 0xc8 APM DS    data */
