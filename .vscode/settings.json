@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.TXT": "txt",
+        "agp_backend.h": "c",
+        "vmalloc.h": "c",
+        "slab.h": "c"
+    }
+}

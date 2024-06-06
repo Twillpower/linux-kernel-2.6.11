@@ -4,7 +4,7 @@
 #include <linux/config.h>
 
 /* PAGE_SHIFT determines the page size */
-#define PAGE_SHIFT	12
+#define PAGE_SHIFT	12  /* 页大小为2^12 = 4096字节 */
 #ifdef __ASSEMBLY__
 #define PAGE_SIZE	(0x1 << PAGE_SHIFT)
 #else
